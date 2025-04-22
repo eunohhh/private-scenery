@@ -6,51 +6,51 @@ import { memo } from "react";
 import { CopyIcon } from "./icons";
 import { Button } from "./ui/button";
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
 } from "./ui/tooltip";
 
 export function PureMessageActions({
-  chatId,
-  message,
-  // vote,
-  isLoading,
+	chatId,
+	message,
+	// vote,
+	isLoading,
 }: {
-  chatId: string;
-  message: Message;
-  // vote: Vote | undefined;
-  isLoading: boolean;
+	chatId: string;
+	message: Message;
+	// vote: Vote | undefined;
+	isLoading: boolean;
 }) {
-  // const { mutate } = useSWRConfig();
-  const [_, copyToClipboard] = useCopyToClipboard();
+	// const { mutate } = useSWRConfig();
+	const [_, copyToClipboard] = useCopyToClipboard();
 
-  if (isLoading) return null;
-  if (message.role === "user") return null;
-  if (message.toolInvocations && message.toolInvocations.length > 0)
-    return null;
+	if (isLoading) return null;
+	if (message.role === "user") return null;
+	if (message.toolInvocations && message.toolInvocations.length > 0)
+		return null;
 
-  return (
-    <TooltipProvider delayDuration={0}>
-      <div className="flex flex-row gap-2">
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <Button
-              className="py-1 px-2 h-fit text-muted-foreground"
-              variant="outline"
-              onClick={async () => {
-                await copyToClipboard(message.content as string);
-                toast.success("Copied to clipboard!");
-              }}
-            >
-              <CopyIcon />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>Copy</TooltipContent>
-        </Tooltip>
+	return (
+		<TooltipProvider delayDuration={0}>
+			<div className="flex flex-row gap-2">
+				<Tooltip>
+					<TooltipTrigger asChild>
+						<Button
+							className="py-1 px-2 h-fit text-muted-foreground"
+							variant="outline"
+							onClick={async () => {
+								await copyToClipboard(message.content as string);
+								toast.success("Copied to clipboard!");
+							}}
+						>
+							<CopyIcon />
+						</Button>
+					</TooltipTrigger>
+					<TooltipContent>Copy</TooltipContent>
+				</Tooltip>
 
-        {/* <Tooltip>
+				{/* <Tooltip>
           <TooltipTrigger asChild>
             <Button
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
@@ -102,7 +102,7 @@ export function PureMessageActions({
           <TooltipContent>Upvote Response</TooltipContent>
         </Tooltip> */}
 
-        {/* <Tooltip>
+				{/* <Tooltip>
           <TooltipTrigger asChild>
             <Button
               className="py-1 px-2 h-fit text-muted-foreground !pointer-events-auto"
@@ -153,17 +153,17 @@ export function PureMessageActions({
           </TooltipTrigger>
           <TooltipContent>Downvote Response</TooltipContent>
         </Tooltip> */}
-      </div>
-    </TooltipProvider>
-  );
+			</div>
+		</TooltipProvider>
+	);
 }
 
 export const MessageActions = memo(
-  PureMessageActions,
-  (prevProps, nextProps) => {
-    // if (!equal(prevProps.vote, nextProps.vote)) return false;
-    if (prevProps.isLoading !== nextProps.isLoading) return false;
+	PureMessageActions,
+	(prevProps, nextProps) => {
+		// if (!equal(prevProps.vote, nextProps.vote)) return false;
+		if (prevProps.isLoading !== nextProps.isLoading) return false;
 
-    return true;
-  },
+		return true;
+	},
 );

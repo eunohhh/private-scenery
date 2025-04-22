@@ -24,9 +24,7 @@
 				"useSortedClasses": "error"
 			}
 		},
-		"ignore": [
-			"**/dist"
-		]
+		"ignore": ["**/dist"]
 	},
 	"javascript": {
 		"formatter": {

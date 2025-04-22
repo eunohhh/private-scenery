@@ -27,7 +27,7 @@ export function SidebarUserNav({ me }: { me: User }) {
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <SidebarMenuButton className="data-[state=open]:bg-sidebar-accent bg-background data-[state=open]:text-sidebar-accent-foreground h-10">
+            <SidebarMenuButton className="h-10 bg-background data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
               <Image
                 src={`${me.user_metadata.avatar_url}`}
                 alt={me.email ?? "User Avatar"}
