@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "genTypes": "supabase gen types typescript --project-id \"ageijospngqmyzptvsoo\" --schema public > src/types/supabase.ts",
+    "prepare": "husky",
+    "format": "prettier --cache --write ."
   },
   "dependencies": {
     "@ai-sdk/openai": "^1.3.16",
