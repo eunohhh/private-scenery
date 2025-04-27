@@ -1,6 +1,4 @@
 import {
-  SunoCustomGenerateAudioPayload,
-  SunoExtendAudioPayload,
   SunoGenerateAudioPayload,
   SunoGenerateAudioResponse,
 } from "@/types/suno.type";
@@ -20,16 +18,6 @@ api.interceptors.response.use(
   }
 );
 
-export async function customGenerateAudio(
-  payload: SunoCustomGenerateAudioPayload
-) {
-  const url = `${baseUrl}/api/custom_generate`;
-  const response = await api.post(url, payload, {
-    headers: { "Content-Type": "application/json" },
-  });
-  return response.data;
-}
-
 export async function generateAudioByPrompt(payload: SunoGenerateAudioPayload) {
   const url = `${baseUrl}/api/generate`;
   return api.post<SunoGenerateAudioResponse[], SunoGenerateAudioResponse[]>(
@@ -42,27 +30,7 @@ export async function generateAudioByPrompt(payload: SunoGenerateAudioPayload) {
   );
 }
 
-export async function extendAudio(payload: SunoExtendAudioPayload) {
-  const url = `${baseUrl}/api/extend_audio`;
-  const response = await api.post(url, payload, {
-    headers: { "Content-Type": "application/json" },
-  });
-  return response.data;
-}
-
 export async function getAudioInformation(audioIds: string[]) {
   const url = `${baseUrl}/api/get?ids=${audioIds}`;
   return api.get<SunoGenerateAudioResponse[], SunoGenerateAudioResponse[]>(url);
-}
-
-export async function getQuotaInformation() {
-  const url = `${baseUrl}/api/get_limit`;
-  const response = await api.get(url);
-  return response.data;
-}
-
-export async function getClipInformation(clipId: string) {
-  const url = `${baseUrl}/api/clip?id=${clipId}`;
-  const response = await api.get(url);
-  return response.data;
 }
