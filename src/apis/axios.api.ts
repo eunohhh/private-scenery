@@ -2,8 +2,8 @@ import type { AxiosError, AxiosResponse } from "axios";
 import axios from "axios";
 
 const api = axios.create({
-	baseURL:
-		process.env.NEXT_PUBLIC_BASE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL,
+  baseURL:
+    process.env.NEXT_PUBLIC_BASE_URL ?? process.env.NEXT_PUBLIC_VERCEL_URL,
 });
 
 // const isBrowser = () => typeof window !== 'undefined';
@@ -30,10 +30,10 @@ const api = axios.create({
 // });
 
 api.interceptors.response.use(
-	<T>(response: AxiosResponse<T>) => response.data as T,
-	(error: AxiosError) => {
-		return Promise.reject(error.response?.data);
-	},
+  <T>(response: AxiosResponse<T>) => response.data as T,
+  (error: AxiosError) => {
+    return Promise.reject(error.response?.data);
+  },
 );
 
 export default api;

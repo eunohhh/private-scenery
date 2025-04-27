@@ -1,10 +1,10 @@
 "use client";
 
 import {
-	deleteSignOut,
-	getMe,
-	getMeClient,
-	getProviderLogin,
+  deleteSignOut,
+  getMe,
+  getMeClient,
+  getProviderLogin,
 } from "@/apis/auth.api";
 import { QUERY_KEY_ME } from "@/constants/auth.constants";
 import { SignOutResponse } from "@/types/auth.type";
@@ -15,90 +15,90 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
 export function useMeQuery(): UseQueryResult<User, Error> {
-	return useQuery<User, Error>({
-		queryKey: [QUERY_KEY_ME],
-		queryFn: () => getMe(),
-	});
+  return useQuery<User, Error>({
+    queryKey: [QUERY_KEY_ME],
+    queryFn: () => getMe(),
+  });
 }
 
 export function useMeClientQuery(): UseQueryResult<Session | null, Error> {
-	return useQuery<Session | null, Error>({
-		queryKey: [QUERY_KEY_ME],
-		queryFn: async () => {
-			const session = await getMeClient();
-			return session;
-		},
-	});
+  return useQuery<Session | null, Error>({
+    queryKey: [QUERY_KEY_ME],
+    queryFn: async () => {
+      const session = await getMeClient();
+      return session;
+    },
+  });
 }
 
 export function useSignOutMutation(): UseMutationResult<
-	SignOutResponse,
-	Error,
-	void
+  SignOutResponse,
+  Error,
+  void
 > {
-	const router = useRouter();
-	const queryClient = useQueryClient();
-	return useMutation<SignOutResponse, Error, void>({
-		mutationFn: deleteSignOut,
-		onSuccess: () => {
-			queryClient.setQueryData([QUERY_KEY_ME], null);
-			router.refresh();
-		},
-	});
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  return useMutation<SignOutResponse, Error, void>({
+    mutationFn: deleteSignOut,
+    onSuccess: () => {
+      queryClient.setQueryData([QUERY_KEY_ME], null);
+      router.refresh();
+    },
+  });
 }
 
 export function useProviderLoginQuery({
-	provider,
-	next,
+  provider,
+  next,
 }: {
-	provider: string;
-	next: string;
+  provider: string;
+  next: string;
 }) {
-	return useQuery<
-		{ message: string },
-		Error,
-		{ provider: string; next: string }
-	>({
-		queryKey: [QUERY_KEY_ME, provider, next],
-		queryFn: () => getProviderLogin(provider, next),
-		enabled: !!provider && !!next,
-	});
+  return useQuery<
+    { message: string },
+    Error,
+    { provider: string; next: string }
+  >({
+    queryKey: [QUERY_KEY_ME, provider, next],
+    queryFn: () => getProviderLogin(provider, next),
+    enabled: !!provider && !!next,
+  });
 }
 
 export function useAuth() {
-	const [error, setError] = useState<Error | null>(null);
-	// const { data: me, isLoading: isMeLoading, error: meError } = useMeQuery();
-	const {
-		data: session,
-		isLoading: isMeLoading,
-		error: meError,
-	} = useMeClientQuery();
-	const {
-		mutate: signOutMutation,
-		isPending: isSignOutPending,
-		error: signOutError,
-	} = useSignOutMutation();
+  const [error, setError] = useState<Error | null>(null);
+  // const { data: me, isLoading: isMeLoading, error: meError } = useMeQuery();
+  const {
+    data: session,
+    isLoading: isMeLoading,
+    error: meError,
+  } = useMeClientQuery();
+  const {
+    mutate: signOutMutation,
+    isPending: isSignOutPending,
+    error: signOutError,
+  } = useSignOutMutation();
 
-	const signOut = useCallback(() => {
-		signOutMutation();
-	}, [signOutMutation]);
+  const signOut = useCallback(() => {
+    signOutMutation();
+  }, [signOutMutation]);
 
-	useEffect(() => {
-		if (meError || signOutError) {
-			setError(meError || signOutError);
-		}
-	}, [meError, signOutError]);
+  useEffect(() => {
+    if (meError || signOutError) {
+      setError(meError || signOutError);
+    }
+  }, [meError, signOutError]);
 
-	// 임시 콘솔 로그
-	useEffect(() => {
-		console.log("user =====>", session?.user);
-	}, [session]);
+  // 임시 콘솔 로그
+  useEffect(() => {
+    console.log("user =====>", session?.user);
+  }, [session]);
 
-	return {
-		me: session?.user,
-		signOut,
-		isMeLoading,
-		isSignOutPending,
-		error,
-	};
+  return {
+    me: session?.user,
+    signOut,
+    isMeLoading,
+    isSignOutPending,
+    error,
+  };
 }

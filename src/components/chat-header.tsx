@@ -13,60 +13,60 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 import { VisibilitySelector, VisibilityType } from "./visibility-selector";
 
 function PureChatHeader({
-	chatId,
-	selectedModelId,
-	selectedVisibilityType,
-	isReadonly,
+  chatId,
+  selectedModelId,
+  selectedVisibilityType,
+  isReadonly,
 }: {
-	chatId: string;
-	selectedModelId: string;
-	selectedVisibilityType: VisibilityType;
-	isReadonly: boolean;
+  chatId: string;
+  selectedModelId: string;
+  selectedVisibilityType: VisibilityType;
+  isReadonly: boolean;
 }) {
-	const router = useRouter();
-	const { open } = useSidebar();
+  const router = useRouter();
+  const { open } = useSidebar();
 
-	const { width: windowWidth } = useWindowSize();
+  const { width: windowWidth } = useWindowSize();
 
-	return (
-		<header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5 md:px-2">
-			<SidebarToggle />
+  return (
+    <header className="sticky top-0 flex items-center gap-2 bg-background px-2 py-1.5 md:px-2">
+      <SidebarToggle />
 
-			{(!open || windowWidth < 768) && (
-				<Tooltip>
-					<TooltipTrigger asChild>
-						<Button
-							variant="outline"
-							className="order-2 ml-auto px-2 md:order-1 md:ml-0 md:h-fit md:px-2"
-							onClick={() => {
-								router.push("/");
-								router.refresh();
-							}}
-						>
-							<PlusIcon />
-							<span className="md:sr-only">New Chat</span>
-						</Button>
-					</TooltipTrigger>
-					<TooltipContent>New Chat</TooltipContent>
-				</Tooltip>
-			)}
+      {(!open || windowWidth < 768) && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="outline"
+              className="order-2 ml-auto px-2 md:order-1 md:ml-0 md:h-fit md:px-2"
+              onClick={() => {
+                router.push("/");
+                router.refresh();
+              }}
+            >
+              <PlusIcon />
+              <span className="md:sr-only">New Chat</span>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>New Chat</TooltipContent>
+        </Tooltip>
+      )}
 
-			{!isReadonly && (
-				<ModelSelector
-					selectedModelId={selectedModelId}
-					className="order-1 md:order-2"
-				/>
-			)}
+      {!isReadonly && (
+        <ModelSelector
+          selectedModelId={selectedModelId}
+          className="order-1 md:order-2"
+        />
+      )}
 
-			{!isReadonly && (
-				<VisibilitySelector
-					chatId={chatId}
-					selectedVisibilityType={selectedVisibilityType}
-					className="order-1 md:order-3"
-				/>
-			)}
+      {!isReadonly && (
+        <VisibilitySelector
+          chatId={chatId}
+          selectedVisibilityType={selectedVisibilityType}
+          className="order-1 md:order-3"
+        />
+      )}
 
-			{/* <Button
+      {/* <Button
         className="bg-zinc-900 dark:bg-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-200 text-zinc-50 dark:text-zinc-900 hidden md:flex py-1.5 px-2 h-fit md:h-[34px] order-4 md:ml-auto"
         asChild
       >
@@ -78,10 +78,10 @@ function PureChatHeader({
           Deploy with Vercel
         </Link>
       </Button> */}
-		</header>
-	);
+    </header>
+  );
 }
 
 export const ChatHeader = memo(PureChatHeader, (prevProps, nextProps) => {
-	return prevProps.selectedModelId === nextProps.selectedModelId;
+  return prevProps.selectedModelId === nextProps.selectedModelId;
 });
