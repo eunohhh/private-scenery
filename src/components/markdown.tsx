@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 import { CodeBlock } from "./code-block";
 
 const components: Partial<Components> = {
-  // @ts-expect-error
+  // @ts-expect-error - react-markdown component signature expects specific props (like inline) not directly handled by CodeBlock type.
   code: CodeBlock,
   pre: ({ children }) => <>{children}</>,
   ol: ({ node, children, ...props }) => {
@@ -38,7 +38,7 @@ const components: Partial<Components> = {
   },
   a: ({ node, children, ...props }) => {
     return (
-      // @ts-expect-error
+      // @ts-expect-error - Link component might not expect all props passed by react-markdown.
       <Link
         className="text-blue-500 hover:underline"
         target="_blank"
@@ -105,5 +105,5 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
 
 export const Markdown = memo(
   NonMemoizedMarkdown,
-  (prevProps, nextProps) => prevProps.children === nextProps.children,
+  (prevProps, nextProps) => prevProps.children === nextProps.children
 );
