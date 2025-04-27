@@ -7,11 +7,12 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"ignore": []
+		"ignore": ["**/dist", "**/node_modules", "**/public", "**/.next"]
 	},
 	"formatter": {
 		"enabled": true,
-		"indentStyle": "tab"
+		"indentStyle": "tab",
+		"ignore": ["**/dist", "**/node_modules", "**/public", "**/.next"]
 	},
 	"organizeImports": {
 		"enabled": true
@@ -19,12 +20,9 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": false,
-			"nursery": {
-				"useSortedClasses": "error"
-			}
+			"recommended": false
 		},
-		"ignore": ["**/dist"]
+		"ignore": ["**/dist", "**/node_modules", "**/public", "**/.next"]
 	},
 	"javascript": {
 		"formatter": {

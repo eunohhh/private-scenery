@@ -1,6 +1,6 @@
 "use server";
 
-import { generateText, Message } from "ai";
+import { Message, generateText } from "ai";
 import { cookies } from "next/headers";
 
 import { VisibilityType } from "@/components/visibility-selector";
